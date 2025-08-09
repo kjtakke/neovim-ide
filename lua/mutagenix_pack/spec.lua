@@ -6,18 +6,17 @@ end
 
 local M = {}
 
--- 🔧 Core loader anchored to a real plugin so the spec is valid
+-- 1) Core loader anchored to a real plugin so the spec is valid
 M[#M+1] = {
   "nvim-lua/plenary.nvim",
   lazy = false,
   priority = 10000,
   init = function()
-    -- run your editor options, autocmds, keymaps, custom commands, etc.
     require("mutagenix_pack.core").setup()
   end,
 }
 
--- todo-comments
+-- 2) todo-comments
 M[#M+1] = {
   "folke/todo-comments.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
@@ -50,7 +49,7 @@ M[#M+1] = {
   },
 }
 
--- Markdown preview
+-- 3) Markdown preview
 M[#M+1] = {
   "iamcco/markdown-preview.nvim",
   ft = { "markdown" },
@@ -70,7 +69,7 @@ M[#M+1] = {
   },
 }
 
--- Colourscheme
+-- 4) Colourscheme
 M[#M+1] = {
   "catppuccin/nvim",
   name = "catppuccin",
@@ -84,13 +83,13 @@ M[#M+1] = {
   end,
 }
 
--- Copilot
+-- 5) Copilot
 M[#M+1] = { "github/copilot.vim", lazy = false }
 
--- Visual Multi
+-- 6) Visual Multi
 M[#M+1] = { "mg979/vim-visual-multi", branch = "master" }
 
--- LSP / Mason / Completion
+-- 7) LSP / Mason / Completion
 M[#M+1] = { "neovim/nvim-lspconfig" }
 
 M[#M+1] = {
@@ -110,11 +109,17 @@ M[#M+1] = {
     if m then
       m.setup({
         ensure_installed = {
+          -- Web
           "html","cssls","emmet_ls","vtsls","eslint","jsonls",
+          -- Backend
           "pyright","bashls","lua_ls","gopls","rust_analyzer","clangd","dockerls","yamlls","graphql",
+          -- JVM / XML / .NET-ish
           "jdtls","kotlin_language_server","lemminx","omnisharp",
+          -- DB / Config
           "sqlls","taplo",
+          -- Others
           "perlpls","powershell_es","ansiblels","terraformls",
+          -- Docs
           "marksman","ltex",
         },
       })
@@ -124,7 +129,11 @@ M[#M+1] = {
 
 M[#M+1] = {
   "hrsh7th/nvim-cmp",
-  dependencies = { "hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip" },
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",
+    "L3MON4D3/LuaSnip",
+    "saadparwaiz1/cmp_luasnip",
+  },
   config = function()
     local cmp, luasnip = safe_require("cmp"), safe_require("luasnip")
     if not (cmp and luasnip) then return end
@@ -141,7 +150,7 @@ M[#M+1] = {
   end,
 }
 
--- Treesitter
+-- 8) Treesitter
 M[#M+1] = {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
@@ -150,10 +159,15 @@ M[#M+1] = {
     if ts then
       ts.setup({
         ensure_installed = {
+          -- Web
           "css","html","javascript","json","scss","typescript",
+          -- Backend / General-purpose
           "bash","c","cpp","elixir","go","java","kotlin","lua","perl","php","python","ruby","rust",
+          -- Infra / Scripting
           "dockerfile","make","terraform","toml","yaml",
+          -- Docs
           "latex","markdown","markdown_inline",
+          -- Other
           "graphql","regex","sql",
         },
         highlight = { enable = true },
@@ -162,7 +176,7 @@ M[#M+1] = {
   end,
 }
 
--- File explorer
+-- 9) File explorer
 M[#M+1] = {
   "nvim-tree/nvim-tree.lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -179,7 +193,7 @@ M[#M+1] = {
   end,
 }
 
--- Telescope
+-- 10) Telescope
 M[#M+1] = {
   "nvim-telescope/telescope.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
@@ -196,7 +210,7 @@ M[#M+1] = {
   end,
 }
 
--- UI niceties
+-- 11) UI niceties
 M[#M+1] = {
   "nvim-lualine/lualine.nvim",
   config = function()
@@ -207,6 +221,8 @@ M[#M+1] = {
 M[#M+1] = { "lewis6991/gitsigns.nvim",  config = true }
 M[#M+1] = { "windwp/nvim-autopairs",    config = true }
 M[#M+1] = { "numToStr/Comment.nvim",    config = true }
+
+-- Optional: fugitive for <leader>b mapping in your core
 M[#M+1] = { "tpope/vim-fugitive" }
 
 return M
